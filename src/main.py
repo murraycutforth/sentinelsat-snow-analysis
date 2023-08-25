@@ -32,7 +32,7 @@ def parse_args():
     dgroup = parser.add_argument_group(title="Args for data download")
     dgroup.add_argument("--data_dir", type=str, help="Path to dir where data should be cached", default=".")
     dgroup.add_argument("--geojson_path", type=str, help="Path to geojson file containing polygons covering all areas which data should be downloaded for")
-    dgroup.add_argument("--download_full", action="store_true", help="Store the full tile, rather than cropping to ROI around polygon")
+    dgroup.add_argument("--download_full", action="store_true", help="Store the full data product, rather than just the 20m SCL band. Uses WAY more disk space.")
 
     agroup = parser.add_argument_group(title="Args for data analysis")
 
