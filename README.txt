@@ -19,7 +19,7 @@ Usage of the main function: run `python -m src.main -h` to see the options.
 	  --data_dir DATA_DIR   Path to dir where data should be cached
 	  --geojson_path GEOJSON_PATH
 	                        Path to geojson file containing polygons covering all areas which data should be downloaded for
-	  --download_full       Store the full tile, rather than cropping to ROI around polygon
+	  --download_full       Store the full data product, rather than just the 20m SCL band. Uses WAY more disk space.
 
 
 
