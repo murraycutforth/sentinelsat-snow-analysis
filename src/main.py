@@ -18,6 +18,7 @@ from src.download.lta import trigger_lta
 from src.download.download import download_products
 
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -40,13 +41,11 @@ def parse_args():
 
 
 def load_product_list():
-    return pd.read_csv("s2_T30VVJ_MSI2A_under50cloud.csv", header=0, index_col=0)
-            
-
+    # TODO: temp
+    return pd.read_csv("s2_T30VVJ_MSI2A_under50cloud.csv", header=0, index_col=0).index
 
 
 def main():
-    logging.basicConfig(level=logging.INFO)
     args = parse_args()
 
     if args.D:
@@ -60,11 +59,11 @@ def main():
         # TODO
         # Either read in csv list of products to download
         # Or read a geojson file, and run a query based on that footprint, to get the list of product ids
-        prod_ids = load_product_list().index[:10]
+        prod_ids = load_product_list()
 
-        # TODO: this could be very slow (e.g. days/weeks to get 400 prods)
-        #trigger_lta(prod_ids, api)
-
+        # TODO
+        # Make these go in parallel, so data is downloaded as it becomes available
+        trigger_lta(prod_ids, api)
         download_products(api, prod_ids, args)
         
 
