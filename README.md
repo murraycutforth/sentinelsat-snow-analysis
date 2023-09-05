@@ -6,8 +6,8 @@ The download stage currently runs (which is more complicated than it sounds, use
 
 Usage of the main function: run `python -m src.main -h` to see the options.
 
-	usage: main.py [-h] (-D | -A) [--data_dir DATA_DIR] [--geojson_path GEOJSON_PATH] [--download_full]
-	
+	usage: main.py [-h] (-D | -A) [--data_dir DATA_DIR] [--geojson_path GEOJSON_PATH] [--download_full] [--api_user API_USER] [--api_password API_PASSWORD]
+
 	A program to download and analyse Sentinel-2 data for snowpatch analysis
 	
 	optional arguments:
@@ -20,6 +20,10 @@ Usage of the main function: run `python -m src.main -h` to see the options.
 	  --geojson_path GEOJSON_PATH
 	                        Path to geojson file containing polygons covering all areas which data should be downloaded for
 	  --download_full       Store the full data product, rather than just the 20m SCL band. Uses WAY more disk space.
+	  --api_user API_USER   Username for Copernicus Sentinel API
+	  --api_password API_PASSWORD
+	                        Password for Copernicus Sentinel API
+
 
 
 Data Availability
@@ -35,7 +39,8 @@ See `notebooks/find_available_product_ids.ipynb` for code which explores the num
 TODO
 ----
 
+ - SCL data before September 2018 isn't being downloaded, probably due to a change in the filename pattern which isn't included in our filter. Investigate.
  - Many TODOs littered around the download code
  - Decide on regions which should be measured- currently hardcoded to cairngorms
  - Implement analysis code (such as a probabilistic approach, maybe coupled to ERA-5 reanalysis data so infer snow melt / accumulation in between measurements)
-  - Analysis code can use gdal_translate to convert jp2 downloads into tiff, then load into xarray
+  - Analysis code can use gdal\_translate to convert jp2 downloads into tiff, then load into xarray
