@@ -14,11 +14,9 @@ import pandas as pd
 from tqdm import tqdm
 from sentinelsat import SentinelAPI
 
-from src.download.lta import trigger_lta
 from src.download.download import download_products
 
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -33,6 +31,8 @@ def parse_args():
     dgroup.add_argument("--data_dir", type=str, help="Path to dir where data should be cached", default=".")
     dgroup.add_argument("--geojson_path", type=str, help="Path to geojson file containing polygons covering all areas which data should be downloaded for")
     dgroup.add_argument("--download_full", action="store_true", help="Store the full data product, rather than just the 20m SCL band. Uses WAY more disk space.")
+    dgroup.add_argument("--api_user", type=str, default="murraycutforth", help="Username for Copernicus Sentinel API")
+    dgroup.add_argument("--api_password", type=str, default="6j6xRHZzAu8X", help="Password for Copernicus Sentinel API")
 
     agroup = parser.add_argument_group(title="Args for data analysis")
 
@@ -46,54 +46,30 @@ def load_product_list():
 
 
 def main():
+    logging.basicConfig(level=logging.DEBUG, format="[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s")
     args = parse_args()
 
     if args.D:
         logger.info("DOWNLOADING DATA")
 
-        # TODO: feed in API key through args, rather than here
-        user = "murraycutforth"
-        password = "6j6xRHZzAu8X"
-        api = SentinelAPI(user, password)
+        api = SentinelAPI(args.api_user, args.api_password)
 
         # TODO
         # Either read in csv list of products to download
         # Or read a geojson file, and run a query based on that footprint, to get the list of product ids
         prod_ids = load_product_list()
 
-        # TODO
-        # Make these go in parallel, so data is downloaded as it becomes available
-        trigger_lta(prod_ids, api)
         download_products(api, prod_ids, args)
-        
 
-
-        assert 0
+        logger.info("All products downloaded")
+        logger.info("Code completed normally")
+        return
 
     else:
         assert args.A
         logger.info("ANALYSING DATA")
 
         assert 0
-
-
-
-
-
-        #title = product_info["title"]
-
-        #logger.info(f"{title}. Online = {online}")
-
-        #if online:
-        #    api.download(prod_id)
-
-        #else:
-        #    lta = api.trigger_offline_retrieval(prod_id)
-        #    logger.info(f"Triggered offline retrieval with return: {lta}")
-
-
-        #break
-
 
 
 if __name__ == "__main__":
