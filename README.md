@@ -22,11 +22,19 @@ Usage of the main function: run `python -m src.main -h` to see the options.
 	  --download_full       Store the full data product, rather than just the 20m SCL band. Uses WAY more disk space.
 
 
+Data Availability
+-----------------
+
+See `notebooks/find_available_product_ids.ipynb` for code which explores the number of Sentinel Data products available. This plot shows data for tile 30VVJ, which covers the Cairngorms, showing a reasonable number of data takes for analysis. The level 2A data includes a scene classification, ready to go.
+
+![sentinel_2a_avail](https://github.com/murraycutforth/sentinelsat-snow-analysis/assets/11088372/db7b070f-0a6d-4f35-81b5-0f5a52aa73c5)
+
+
+
 
 TODO
 ----
 
- - requirements.txt file
  - Many TODOs littered around the download code
  - Decide on regions which should be measured- currently hardcoded to cairngorms
  - Implement analysis code (such as a probabilistic approach, maybe coupled to ERA-5 reanalysis data so infer snow melt / accumulation in between measurements)
